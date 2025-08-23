@@ -29,7 +29,7 @@ class Test
     #[ORM\Column(length: 255)]
     private ?string $city = null;
 
-    #[ORM\Column(length: 5)]
+    #[ORM\Column(length: 5, name:'postalCode')]
     private ?string $postalCode = null;
 
     #[ORM\Column]
