@@ -7,12 +7,14 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Test;
 use App\Form\TestType;
+use App\Repository\TestRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 
 class BaseController extends AbstractController
 {
+
     #[Route(path: '/', name: 'home')]
     public function number(): Response
     {
@@ -27,6 +29,9 @@ class BaseController extends AbstractController
     public function newPage(EntityManagerInterface $em, Request $request): Response
     {
         $number = random_int(0, 100);
+
+        $tests = $em->getRepository(Test::class)->findAll();
+
 
         $form = $this->createForm(TestType::class, null);
         $form->handleRequest($request);
@@ -45,6 +50,7 @@ class BaseController extends AbstractController
         }
 
         return $this->render('new.html.twig', [
+            'tests' => $tests,
             'number' => $number??null,
             'form' => $form->createView()??null,
         ]);

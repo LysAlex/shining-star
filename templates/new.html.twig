@@ -9,9 +9,21 @@
 {% endblock %}
 {% block body %}
     <h1>Index</h1>
+    <ul>
+        {% for test in tests %}
+            <li>{{ test.name }}</li>
+            <li>{{ test.email }}</li>
+            <li>{{ test.birthday|date('d/m/Y') }}</li>
+            <li>{{ test.city }} {{ test.postalCode }}, {{ test.country }} </li>
+            <li>{{ test.money }} €</li>
+        {% endfor %}
+    </ul>
     <p class="important">
         Welcome on my awesome homepage.
     </p>
+
+
+
     {{ form_start(form) }}
 
 
