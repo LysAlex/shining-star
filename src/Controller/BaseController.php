@@ -55,4 +55,30 @@ class BaseController extends AbstractController
             'form' => $form->createView()??null,
         ]);
     }
+
+    #[Route(path: '/edit/{id}', name: 'edit')]
+    public function editTest(EntityManagerInterface $em, Request $request, int $id): Response
+    {
+        $test = $em->getRepository(Test::class)->find($id);
+
+        $form = $this->createForm(TestType::class, $test);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $test->setName($form->get('name')->getData())
+                 ->setEmail($form->get('email')->getData())
+                 ->setBirthday($form->get('birthday')->getData())
+                 ->setCountry($form->get('country')->getData())
+                 ->setCity($form->get('city')->getData())
+                 ->setPostalCode($form->get('postalCode')->getData())
+                 ->setMoney($form->get('money')->getData());
+            $em->flush();
+
+            return $this->redirectToRoute('new');
+        }
+
+        return $this->render('edit.html.twig', [
+            'form' => $form->createView()??null,
+        ]);
+    }
 }

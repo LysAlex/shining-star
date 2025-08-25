@@ -16,6 +16,7 @@
             <li>{{ test.birthday|date('d/m/Y') }}</li>
             <li>{{ test.city }} {{ test.postalCode }}, {{ test.country }} </li>
             <li>{{ test.money }} €</li>
+            <li><a href="{{ path('edit', {'id' : test.id}) }}"> Editer </a></li>
         {% endfor %}
     </ul>
     <p class="important">
