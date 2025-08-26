@@ -7,7 +7,6 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Test;
 use App\Form\TestType;
-use App\Repository\TestRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -80,5 +79,15 @@ class BaseController extends AbstractController
         return $this->render('edit.html.twig', [
             'form' => $form->createView()??null,
         ]);
+    }
+
+    #[Route(path: '/delete/{id}', name: 'delete')]
+    public function deleteTest(EntityManagerInterface $em, Request $request, int $id): Response
+    {
+        $test = $em->getRepository(Test::class)->find($id);
+        
+        $em->remove($test);
+        $em->flush();
+        return $this->redirectToRoute('new');
     }
 }

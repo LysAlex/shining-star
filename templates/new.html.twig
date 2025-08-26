@@ -17,6 +17,7 @@
             <li>{{ test.city }} {{ test.postalCode }}, {{ test.country }} </li>
             <li>{{ test.money }} €</li>
             <li><a href="{{ path('edit', {'id' : test.id}) }}"> Editer </a></li>
+            <li><a href="{{ path('delete', {'id' : test.id}) }}"> Supprimer </a></li>
         {% endfor %}
     </ul>
     <p class="important">
