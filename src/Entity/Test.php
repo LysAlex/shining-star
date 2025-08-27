@@ -10,9 +10,9 @@ use Doctrine\ORM\Mapping as ORM;
 class Test
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
+    private int $id;
 
     #[ORM\Column(length: 100)]
     private ?string $name = null;
@@ -35,7 +35,7 @@ class Test
     #[ORM\Column]
     private ?int $money = null;
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }

@@ -17,11 +17,7 @@ class BaseController extends AbstractController
     #[Route(path: '/', name: 'home')]
     public function number(): Response
     {
-        $number = random_int(0, 100);
-
-        return $this->render('base.html.twig', [
-            'number' => $number??null
-        ]);
+        return $this->render('base.html.twig');
     }
 
      #[Route(path: '/new', name: 'new')]
@@ -30,7 +26,6 @@ class BaseController extends AbstractController
         $number = random_int(0, 100);
 
         $tests = $em->getRepository(Test::class)->findAll();
-
 
         $form = $this->createForm(TestType::class, null);
         $form->handleRequest($request);
@@ -46,6 +41,8 @@ class BaseController extends AbstractController
                             ->setMoney($form->get('money')->getData());
             $em->persist($test);
             $em->flush();
+
+            return $this->redirect('new');
         }
 
         return $this->render('new.html.twig', [
